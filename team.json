@@ -1,6 +1,11 @@
 { 
-    "Adarsh Chauhan" : "mriarc-08",
-    "Lakshya" : "lakshyapvt2010-ux",
-    "Kushal Rathore" : "kushalrathore19",
-    "Ojas kwatra" : "oojasskwatra-gif"
+  "team_number": "T0123",
+  "group_lead": { "name": "Kushal Rathore", "enrollment_no": "2501010242", "github": "kushalrathore19" },
+  "members": [
+    { "name": "Lakshya", "enrollment_no": "2501010248", "github": "lakshyapvt2010-ux" },
+    { "name": "Adarsh Chauhan", "enrollment_no": "2501010622", "github": "mriarc-08" },
+    { "name": "Oojass Kwatra", "enrollment_no": "2501010636", "github": "oojasskwatra-gif" }
+  ],
+  "postgres_version": "18.6",
+  "laptop_used_for_benchmarks": "MacBook Pro (Apple M4)"
 }
