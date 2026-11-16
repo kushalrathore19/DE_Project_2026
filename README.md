@@ -22,11 +22,11 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
-
+| Group Lead | Kushal Rathore|2501010242 | kushalrathore19|
+| Member 2 | Adarsh Chauhan | 2501010622 | mriarc-08|
+| Member 3 | Lakshya| 2501010248| lakshyapvt2010-ux|
+| Member 4 | Oojass Kwatra | 2501010636| oojasskwatra-gif|
+ 
 **Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
 
 ---
