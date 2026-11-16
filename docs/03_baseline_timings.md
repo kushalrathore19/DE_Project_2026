@@ -94,3 +94,4 @@
    * `OFFSET 75000 LIMIT 25` forces sorting and scanning 75,025 rows. Keyset pagination (`WHERE ordered_at < $last_seen_date ORDER BY ordered_at DESC LIMIT 25`) with a B-tree index on `orders(ordered_at DESC)` will enable instant execution.
 5. **Full Text & Pattern Matching (R01, R16):**
    * `ILIKE '%wireless%'` and `ILIKE '%battery%'` inspect every byte across 30k products and 38k reviews. Adding the `pg_trgm` extension and GIN trigram indexes will enable index scans on arbitrary substring searches.
+

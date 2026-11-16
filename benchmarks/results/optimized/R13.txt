@@ -1,0 +1,51 @@
+=== R13 run 1 ===
+Hash Right Anti Join  (cost=1476.79..5120.79 rows=19076 width=13) (actual time=23.738..25.369 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=565 read=185
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.29..2560.21 rows=120000 width=4) (actual time=0.239..7.021 rows=114118.00 loops=1)
+        Heap Fetches: 180
+        Index Searches: 1
+        Buffers: shared hit=101 read=185
+  ->  Hash  (cost=914.00..914.00 rows=45000 width=13) (actual time=7.593..7.593 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared hit=464
+        ->  Seq Scan on addresses a  (cost=0.00..914.00 rows=45000 width=13) (actual time=0.010..3.784 rows=45000.00 loops=1)
+              Buffers: shared hit=464
+Planning:
+  Buffers: shared hit=338
+Planning Time: 0.916 ms
+Execution Time: 25.986 ms
+=== R13 run 2 ===
+Hash Right Anti Join  (cost=1476.79..5120.79 rows=19076 width=13) (actual time=23.079..24.767 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=750
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.29..2560.21 rows=120000 width=4) (actual time=0.038..6.455 rows=114118.00 loops=1)
+        Heap Fetches: 180
+        Index Searches: 1
+        Buffers: shared hit=286
+  ->  Hash  (cost=914.00..914.00 rows=45000 width=13) (actual time=7.462..7.463 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared hit=464
+        ->  Seq Scan on addresses a  (cost=0.00..914.00 rows=45000 width=13) (actual time=0.007..3.312 rows=45000.00 loops=1)
+              Buffers: shared hit=464
+Planning:
+  Buffers: shared hit=338
+Planning Time: 0.819 ms
+Execution Time: 25.397 ms
+=== R13 run 3 ===
+Hash Right Anti Join  (cost=1476.79..5120.79 rows=19076 width=13) (actual time=22.373..24.032 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=750
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.29..2560.21 rows=120000 width=4) (actual time=0.043..6.178 rows=114118.00 loops=1)
+        Heap Fetches: 180
+        Index Searches: 1
+        Buffers: shared hit=286
+  ->  Hash  (cost=914.00..914.00 rows=45000 width=13) (actual time=7.324..7.324 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared hit=464
+        ->  Seq Scan on addresses a  (cost=0.00..914.00 rows=45000 width=13) (actual time=0.013..3.347 rows=45000.00 loops=1)
+              Buffers: shared hit=464
+Planning:
+  Buffers: shared hit=338
+Planning Time: 0.832 ms
+Execution Time: 24.677 ms

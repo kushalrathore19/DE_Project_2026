@@ -81,3 +81,4 @@
 2. **Read-to-Write Skew:** As a marketplace, reads outnumber writes by ~80:20. Modest write overhead on inserts/updates is acceptable if customer-facing read latencies are dramatically cut.
 3. **Digital vs. Physical Orders:** Orders containing exclusively digital items (e-books, digital gift cards) legitimately have `address_id IS NULL` and `shipped_at IS NULL` (instant electronic delivery). Constraints and reports must account for this domain rule.
 4. **Data Immutability & Consistency:** Seed data reflects historical operational facts (120,000 orders). Functional dependencies (e.g., `products.review_count`, `products.avg_rating`, `orders.total_amount`) are derived caches that must match detailed tables.
+

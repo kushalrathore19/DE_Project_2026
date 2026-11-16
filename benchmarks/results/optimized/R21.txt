@@ -1,0 +1,45 @@
+=== R21 run 1 ===
+Sort  (cost=520.40..525.90 rows=2199 width=40) (actual time=1.781..1.828 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=123
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.42..398.33 rows=2199 width=40) (actual time=0.046..1.540 rows=1327.00 loops=1)
+        Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+        Filter: (delivered_at > (ordered_at + '5 days'::interval))
+        Rows Removed by Filter: 5266
+        Index Searches: 1
+        Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=238
+Planning Time: 0.581 ms
+Execution Time: 1.921 ms
+=== R21 run 2 ===
+Sort  (cost=520.40..525.90 rows=2199 width=40) (actual time=1.800..1.845 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=123
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.42..398.33 rows=2199 width=40) (actual time=0.044..1.564 rows=1327.00 loops=1)
+        Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+        Filter: (delivered_at > (ordered_at + '5 days'::interval))
+        Rows Removed by Filter: 5266
+        Index Searches: 1
+        Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=238
+Planning Time: 0.602 ms
+Execution Time: 1.940 ms
+=== R21 run 3 ===
+Sort  (cost=520.40..525.90 rows=2199 width=40) (actual time=1.699..1.744 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=123
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.42..398.33 rows=2199 width=40) (actual time=0.045..1.475 rows=1327.00 loops=1)
+        Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+        Filter: (delivered_at > (ordered_at + '5 days'::interval))
+        Rows Removed by Filter: 5266
+        Index Searches: 1
+        Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=238
+Planning Time: 0.589 ms
+Execution Time: 1.837 ms

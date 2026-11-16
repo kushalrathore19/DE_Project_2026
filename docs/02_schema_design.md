@@ -311,3 +311,4 @@ SELECT count(*) AS total_amount_mismatches FROM (SELECT o.order_id, o.total_amou
    * Exactly 8,966 customers have `is_prime = true`, all of whom have a valid `prime_since` date. The remaining 21,034 customers have `is_prime = false` and `prime_since IS NULL`.
 5. **The R13 `NOT IN` NULL Hazard:**
    * Because 5,882 orders have `address_id IS NULL`, running `WHERE address_id NOT IN (SELECT address_id FROM orders)` evaluates to `UNKNOWN` for all rows, returning an empty set. Customer support noted that unused addresses exist; the query was broken due to SQL three-valued logic.
+

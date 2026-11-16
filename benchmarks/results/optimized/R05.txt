@@ -1,0 +1,27 @@
+=== R05 run 1 ===
+Index Scan using idx_orders_shipped_at_partial on orders  (cost=0.28..51.39 rows=806 width=16) (actual time=0.193..2.045 rows=356.00 loops=1)
+  Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+  Index Searches: 1
+  Buffers: shared hit=319 read=3
+Planning:
+  Buffers: shared hit=239
+Planning Time: 1.992 ms
+Execution Time: 2.079 ms
+=== R05 run 2 ===
+Index Scan using idx_orders_shipped_at_partial on orders  (cost=0.28..51.39 rows=806 width=16) (actual time=0.031..0.814 rows=356.00 loops=1)
+  Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+  Index Searches: 1
+  Buffers: shared hit=322
+Planning:
+  Buffers: shared hit=239
+Planning Time: 1.763 ms
+Execution Time: 0.851 ms
+=== R05 run 3 ===
+Index Scan using idx_orders_shipped_at_partial on orders  (cost=0.28..51.39 rows=806 width=16) (actual time=0.033..1.515 rows=356.00 loops=1)
+  Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+  Index Searches: 1
+  Buffers: shared hit=322
+Planning:
+  Buffers: shared hit=239
+Planning Time: 1.124 ms
+Execution Time: 1.563 ms

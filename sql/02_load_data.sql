@@ -81,3 +81,4 @@ FROM (
     GROUP BY o.order_id, o.total_amount
 ) t
 WHERE abs(t.total_amount - t.calc_total) > 0.01;
+

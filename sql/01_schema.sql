@@ -181,3 +181,4 @@ CREATE TABLE cart_items (
     PRIMARY KEY (customer_id, product_id),
     CONSTRAINT chk_cart_qty CHECK (quantity > 0)
 );
+
