@@ -1,27 +1,11 @@
-{
-  "team_number": "TBD",
-  "group_lead": {
-    "name": "Kushal Rathore",
-    "enrollment_no": "2501010242",
-    "github": "kushalrathore19"
-  },
+{ 
+  "team_number": "T0123",
+  "group_lead": { "name": "Kushal Rathore", "enrollment_no": "2501010242", "github": "kushalrathore19" },
   "members": [
-    {
-      "name": "Adarsh Chauhan",
-      "enrollment_no": "2501010622",
-      "github": "mriarc-08"
-    },
-    {
-      "name": "Lakshya",
-      "enrollment_no": "2501010248",
-      "github": "lakshyapvt2010-ux"
-    },
-    {
-      "name": "Oojass Kwatra",
-      "enrollment_no": "2501010636",
-      "github": "oojasskwatra-gif"
-    }
+    { "name": "Lakshya", "enrollment_no": "2501010248", "github": "lakshyapvt2010-ux" },
+    { "name": "Adarsh Chauhan", "enrollment_no": "2501010622", "github": "mriarc-08" },
+    { "name": "Oojass Kwatra", "enrollment_no": "2501010636", "github": "oojasskwatra-gif" }
   ],
   "postgres_version": "18.3",
-  "laptop_used_for_benchmarks": "Apple MacBook"
+  "laptop_used_for_benchmarks": "MacBook Pro (Apple M4)"
 }
