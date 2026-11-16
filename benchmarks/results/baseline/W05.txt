@@ -1,0 +1,66 @@
+=== W05 run 1 ===
+Update on orders  (cost=63.95..71.97 rows=0 width=0) (actual time=14.756..14.756 rows=0.00 loops=1)
+  Buffers: shared hit=1733 dirtied=1
+  InitPlan 2
+    ->  Result  (cost=63.65..63.66 rows=1 width=4) (actual time=14.400..14.401 rows=1.00 loops=1)
+          Buffers: shared hit=1697
+          InitPlan 1
+            ->  Limit  (cost=0.29..63.65 rows=1 width=4) (actual time=14.391..14.391 rows=1.00 loops=1)
+                  Buffers: shared hit=1697
+                  ->  Index Scan using orders_pkey on orders orders_1  (cost=0.29..4815.29 rows=76 width=4) (actual time=14.390..14.390 rows=1.00 loops=1)
+                        Filter: ((status)::text = 'PACKED'::text)
+                        Rows Removed by Filter: 119880
+                        Index Searches: 1
+                        Buffers: shared hit=1697
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=92) (actual time=14.422..14.423 rows=1.00 loops=1)
+        Index Cond: (order_id = (InitPlan 2).col1)
+        Index Searches: 1
+        Buffers: shared hit=1700
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.394 ms
+Execution Time: 14.854 ms
+=== W05 run 2 ===
+Update on orders  (cost=63.95..71.97 rows=0 width=0) (actual time=15.182..15.182 rows=0.00 loops=1)
+  Buffers: shared hit=1735 dirtied=1
+  InitPlan 2
+    ->  Result  (cost=63.65..63.66 rows=1 width=4) (actual time=14.835..14.835 rows=1.00 loops=1)
+          Buffers: shared hit=1697
+          InitPlan 1
+            ->  Limit  (cost=0.29..63.65 rows=1 width=4) (actual time=14.825..14.826 rows=1.00 loops=1)
+                  Buffers: shared hit=1697
+                  ->  Index Scan using orders_pkey on orders orders_1  (cost=0.29..4815.29 rows=76 width=4) (actual time=14.824..14.824 rows=1.00 loops=1)
+                        Filter: ((status)::text = 'PACKED'::text)
+                        Rows Removed by Filter: 119880
+                        Index Searches: 1
+                        Buffers: shared hit=1697
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=92) (actual time=14.859..14.860 rows=1.00 loops=1)
+        Index Cond: (order_id = (InitPlan 2).col1)
+        Index Searches: 1
+        Buffers: shared hit=1702
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.478 ms
+Execution Time: 15.372 ms
+=== W05 run 3 ===
+Update on orders  (cost=63.95..71.97 rows=0 width=0) (actual time=15.429..15.431 rows=0.00 loops=1)
+  Buffers: shared hit=1735 dirtied=1
+  InitPlan 2
+    ->  Result  (cost=63.65..63.66 rows=1 width=4) (actual time=15.010..15.012 rows=1.00 loops=1)
+          Buffers: shared hit=1697
+          InitPlan 1
+            ->  Limit  (cost=0.29..63.65 rows=1 width=4) (actual time=15.001..15.002 rows=1.00 loops=1)
+                  Buffers: shared hit=1697
+                  ->  Index Scan using orders_pkey on orders orders_1  (cost=0.29..4815.29 rows=76 width=4) (actual time=15.000..15.001 rows=1.00 loops=1)
+                        Filter: ((status)::text = 'PACKED'::text)
+                        Rows Removed by Filter: 119880
+                        Index Searches: 1
+                        Buffers: shared hit=1697
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=92) (actual time=15.032..15.033 rows=1.00 loops=1)
+        Index Cond: (order_id = (InitPlan 2).col1)
+        Index Searches: 1
+        Buffers: shared hit=1702
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.521 ms
+Execution Time: 15.506 ms

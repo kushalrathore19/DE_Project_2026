@@ -1,0 +1,111 @@
+=== R18 run 1 ===
+Sort  (cost=4992.96..5007.06 rows=5641 width=40) (actual time=21.466..21.591 rows=3283.00 loops=1)
+  Sort Key: (ntile(4) OVER w1), t.total_spend DESC
+  Sort Method: quicksort  Memory: 199kB
+  Buffers: shared hit=1771
+  ->  WindowAgg  (cost=4542.78..4641.48 rows=5641 width=40) (actual time=20.153..20.745 rows=3283.00 loops=1)
+        Window: w1 AS (ORDER BY t.total_spend ROWS UNBOUNDED PRECEDING)
+        Storage: Memory  Maximum Storage: 161kB
+        Buffers: shared hit=1765
+        ->  Sort  (cost=4542.76..4556.86 rows=5641 width=36) (actual time=19.684..19.909 rows=3283.00 loops=1)
+              Sort Key: t.total_spend DESC
+              Sort Method: quicksort  Memory: 199kB
+              Buffers: shared hit=1765
+              ->  Subquery Scan on t  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=18.022..18.845 rows=3283.00 loops=1)
+                    Buffers: shared hit=1765
+                    ->  HashAggregate  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=18.021..18.617 rows=3283.00 loops=1)
+                          Group Key: o.customer_id
+                          Batches: 1  Memory Usage: 1425kB
+                          Buffers: shared hit=1765
+                          ->  Hash Join  (cost=808.00..4092.56 rows=5641 width=9) (actual time=8.838..16.601 rows=5478.00 loops=1)
+                                Hash Cond: (o.customer_id = c.customer_id)
+                                Buffers: shared hit=1765
+                                ->  Seq Scan on orders o  (cost=0.00..3192.00 rows=35257 width=9) (actual time=5.652..10.422 rows=34424.00 loops=1)
+                                      Filter: ((ordered_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'DELIVERED'::text))
+                                      Rows Removed by Filter: 85576
+                                      Buffers: shared hit=1392
+                                ->  Hash  (cost=748.00..748.00 rows=4800 width=4) (actual time=3.167..3.167 rows=4800.00 loops=1)
+                                      Buckets: 8192  Batches: 1  Memory Usage: 233kB
+                                      Buffers: shared hit=373
+                                      ->  Seq Scan on customers c  (cost=0.00..748.00 rows=4800 width=4) (actual time=0.013..2.804 rows=4800.00 loops=1)
+                                            Filter: (city_id = 2)
+                                            Rows Removed by Filter: 25200
+                                            Buffers: shared hit=373
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.651 ms
+Execution Time: 21.840 ms
+=== R18 run 2 ===
+Sort  (cost=4992.96..5007.06 rows=5641 width=40) (actual time=20.108..20.265 rows=3283.00 loops=1)
+  Sort Key: (ntile(4) OVER w1), t.total_spend DESC
+  Sort Method: quicksort  Memory: 199kB
+  Buffers: shared hit=1771
+  ->  WindowAgg  (cost=4542.78..4641.48 rows=5641 width=40) (actual time=19.291..19.661 rows=3283.00 loops=1)
+        Window: w1 AS (ORDER BY t.total_spend ROWS UNBOUNDED PRECEDING)
+        Storage: Memory  Maximum Storage: 161kB
+        Buffers: shared hit=1765
+        ->  Sort  (cost=4542.76..4556.86 rows=5641 width=36) (actual time=19.017..19.137 rows=3283.00 loops=1)
+              Sort Key: t.total_spend DESC
+              Sort Method: quicksort  Memory: 199kB
+              Buffers: shared hit=1765
+              ->  Subquery Scan on t  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=17.558..18.333 rows=3283.00 loops=1)
+                    Buffers: shared hit=1765
+                    ->  HashAggregate  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=17.557..18.096 rows=3283.00 loops=1)
+                          Group Key: o.customer_id
+                          Batches: 1  Memory Usage: 1425kB
+                          Buffers: shared hit=1765
+                          ->  Hash Join  (cost=808.00..4092.56 rows=5641 width=9) (actual time=8.694..16.194 rows=5478.00 loops=1)
+                                Hash Cond: (o.customer_id = c.customer_id)
+                                Buffers: shared hit=1765
+                                ->  Seq Scan on orders o  (cost=0.00..3192.00 rows=35257 width=9) (actual time=5.692..10.344 rows=34424.00 loops=1)
+                                      Filter: ((ordered_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'DELIVERED'::text))
+                                      Rows Removed by Filter: 85576
+                                      Buffers: shared hit=1392
+                                ->  Hash  (cost=748.00..748.00 rows=4800 width=4) (actual time=2.983..2.983 rows=4800.00 loops=1)
+                                      Buckets: 8192  Batches: 1  Memory Usage: 233kB
+                                      Buffers: shared hit=373
+                                      ->  Seq Scan on customers c  (cost=0.00..748.00 rows=4800 width=4) (actual time=0.011..2.635 rows=4800.00 loops=1)
+                                            Filter: (city_id = 2)
+                                            Rows Removed by Filter: 25200
+                                            Buffers: shared hit=373
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.636 ms
+Execution Time: 20.479 ms
+=== R18 run 3 ===
+Sort  (cost=4992.96..5007.06 rows=5641 width=40) (actual time=19.545..19.661 rows=3283.00 loops=1)
+  Sort Key: (ntile(4) OVER w1), t.total_spend DESC
+  Sort Method: quicksort  Memory: 199kB
+  Buffers: shared hit=1771
+  ->  WindowAgg  (cost=4542.78..4641.48 rows=5641 width=40) (actual time=18.720..19.088 rows=3283.00 loops=1)
+        Window: w1 AS (ORDER BY t.total_spend ROWS UNBOUNDED PRECEDING)
+        Storage: Memory  Maximum Storage: 161kB
+        Buffers: shared hit=1765
+        ->  Sort  (cost=4542.76..4556.86 rows=5641 width=36) (actual time=18.445..18.567 rows=3283.00 loops=1)
+              Sort Key: t.total_spend DESC
+              Sort Method: quicksort  Memory: 199kB
+              Buffers: shared hit=1765
+              ->  Subquery Scan on t  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=16.965..17.753 rows=3283.00 loops=1)
+                    Buffers: shared hit=1765
+                    ->  HashAggregate  (cost=4120.77..4191.28 rows=5641 width=36) (actual time=16.964..17.525 rows=3283.00 loops=1)
+                          Group Key: o.customer_id
+                          Batches: 1  Memory Usage: 1425kB
+                          Buffers: shared hit=1765
+                          ->  Hash Join  (cost=808.00..4092.56 rows=5641 width=9) (actual time=8.513..15.789 rows=5478.00 loops=1)
+                                Hash Cond: (o.customer_id = c.customer_id)
+                                Buffers: shared hit=1765
+                                ->  Seq Scan on orders o  (cost=0.00..3192.00 rows=35257 width=9) (actual time=5.509..9.941 rows=34424.00 loops=1)
+                                      Filter: ((ordered_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'DELIVERED'::text))
+                                      Rows Removed by Filter: 85576
+                                      Buffers: shared hit=1392
+                                ->  Hash  (cost=748.00..748.00 rows=4800 width=4) (actual time=2.988..2.988 rows=4800.00 loops=1)
+                                      Buckets: 8192  Batches: 1  Memory Usage: 233kB
+                                      Buffers: shared hit=373
+                                      ->  Seq Scan on customers c  (cost=0.00..748.00 rows=4800 width=4) (actual time=0.009..2.645 rows=4800.00 loops=1)
+                                            Filter: (city_id = 2)
+                                            Rows Removed by Filter: 25200
+                                            Buffers: shared hit=373
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.644 ms
+Execution Time: 19.863 ms

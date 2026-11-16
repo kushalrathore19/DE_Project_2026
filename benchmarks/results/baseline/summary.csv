@@ -1,0 +1,31 @@
+query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes
+R01,READ,15.957,15.990,15.602,16.280,Seq Scan on products
+R02,READ,7.232,7.214,6.997,7.486,Seq Scan on categories | Seq Scan on products
+R03,READ,3.667,3.549,3.425,4.026,Seq Scan on product_reviews
+R04,READ,10.491,10.608,9.617,11.249,Seq Scan on orders | Index Only Scan using order_items_pkey on order_items
+R05,READ,13.787,13.183,13.001,15.178,Seq Scan on orders
+R06,READ,10.986,10.955,9.318,12.685,Seq Scan on order_items | Index Scan using orders_pkey on orders
+R07,READ,4.686,4.760,4.321,4.976,Seq Scan on products
+R08,READ,50.630,50.560,49.371,51.958,Seq Scan on order_items | Seq Scan on orders | Seq Scan on products
+R09,READ,50.912,51.157,50.376,51.202,Seq Scan on orders | Seq Scan on customers
+R10,READ,34.486,34.541,33.851,35.067,Seq Scan on orders | Seq Scan on cart_items | Seq Scan on products
+R11,READ,9.158,8.965,8.867,9.642,Seq Scan on order_items | Index Scan using order_items_pkey on order_items
+R12,READ,124.126,122.463,117.711,132.203,Seq Scan on order_items | Seq Scan on products | Seq Scan on categories | Seq Scan on returns
+R13,READ,39.708,37.884,32.556,48.683,Seq Scan on addresses | Seq Scan on orders
+R14,READ,8.531,8.677,8.107,8.810,Seq Scan on products
+R15,READ,53.343,50.677,44.794,64.559,Seq Scan on order_items | Seq Scan on orders | Seq Scan on sellers
+R16,READ,17.548,17.655,17.224,17.764,Seq Scan on product_reviews | Seq Scan on products | Seq Scan on categories
+R17,READ,133.371,135.063,122.216,142.833,Seq Scan on order_items | Seq Scan on orders | Seq Scan on product_reviews
+R18,READ,20.727,20.479,19.863,21.840,Seq Scan on orders | Seq Scan on customers
+R19,READ,18416.640,18478.032,18184.117,18587.772,Seq Scan on categories | Seq Scan on products | Seq Scan on order_items | Index Scan using orders_pkey on orders
+R20,READ,12.641,12.721,12.153,13.049,Seq Scan on orders
+R21,READ,10.027,10.139,9.786,10.156,Seq Scan on orders
+R22,READ,50.907,51.036,50.482,51.203,Seq Scan on orders
+R23,READ,0.138,0.127,0.126,0.161,Index Scan using order_items_pkey on order_items | Index Scan using orders_pkey on orders | Index Scan using products_pkey on products | Index Scan using sellers_pkey on sellers
+R24,READ,0.062,0.062,0.057,0.068,Index Scan using products_asin_key on products
+W01,WRITE,2.005,2.065,1.832,2.118,(no scan)
+W02,WRITE,0.981,1.019,0.850,1.073,Index Scan using products_pkey on products
+W03,WRITE,3.903,3.759,2.990,4.960,Seq Scan on categories | Seq Scan on products
+W04,WRITE,66.545,64.915,63.664,71.057,(no scan)
+W05,WRITE,15.244,15.372,14.854,15.506,Index Scan using orders_pkey on orders
+W06,WRITE,10.697,10.980,10.101,11.009,Seq Scan on cart_items
