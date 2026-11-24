@@ -762,3 +762,5 @@ WHERE order_id = (SELECT min(order_id) FROM orders WHERE status = 'PACKED');
 DELETE FROM cart_items
 WHERE added_at < TIMESTAMPTZ '2026-07-01 00:00:00+05:30' - interval '90 days';
 ```
+
+. 
