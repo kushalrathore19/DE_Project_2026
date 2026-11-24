@@ -1,0 +1,96 @@
+=== R17 run 1 ===
+Gather  (cost=1001.26..95598.38 rows=1 width=12) (actual time=666.182..6842.322 rows=20000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=4977149 read=3038987 written=5
+  ->  Nested Loop Anti Join  (cost=1.26..94598.28 rows=1 width=12) (actual time=706.850..6781.088 rows=6666.67 loops=3)
+        Buffers: shared hit=4977149 read=3038987 written=5
+        ->  Parallel Seq Scan on product_reviews r  (cost=0.00..12782.88 rows=298221 width=12) (actual time=0.004..66.688 rows=239049.00 loops=3)
+              Filter: verified_purchase
+              Rows Removed by Filter: 20000
+              Buffers: shared hit=27 read=9525
+        ->  Hash Join  (cost=1.26..1.53 rows=1 width=8) (actual time=0.028..0.028 rows=0.97 loops=717147)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4977122 read=3029462 written=5
+              ->  Index Only Scan using idx_order_items_product_order on order_items oi  (cost=0.43..0.68 rows=8 width=8) (actual time=0.007..0.007 rows=4.74 loops=716676)
+                    Index Cond: (product_id = r.product_id)
+                    Heap Fetches: 0
+                    Index Searches: 716676
+                    Buffers: shared hit=1642548 read=631174
+              ->  Hash  (cost=0.77..0.77 rows=5 width=8) (actual time=0.020..0.020 rows=4.66 loops=717147)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=3334574 read=2398288 written=5
+                    ->  Index Scan using idx_orders_customer_ordered_at on orders o  (cost=0.43..0.77 rows=5 width=8) (actual time=0.009..0.019 rows=4.66 loops=717147)
+                          Index Cond: (customer_id = r.customer_id)
+                          Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          Rows Removed by Filter: 0
+                          Index Searches: 717147
+                          Buffers: shared hit=3334574 read=2398288 written=5
+Planning:
+  Buffers: shared hit=553 read=24
+Planning Time: 3.649 ms
+Execution Time: 6843.256 ms
+=== R17 run 2 ===
+Gather  (cost=1001.26..95598.38 rows=1 width=12) (actual time=171.225..6146.798 rows=20000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=4981186 read=3034950
+  ->  Nested Loop Anti Join  (cost=1.26..94598.28 rows=1 width=12) (actual time=173.741..6140.208 rows=6666.67 loops=3)
+        Buffers: shared hit=4981186 read=3034950
+        ->  Parallel Seq Scan on product_reviews r  (cost=0.00..12782.88 rows=298221 width=12) (actual time=0.055..65.470 rows=239049.00 loops=3)
+              Filter: verified_purchase
+              Rows Removed by Filter: 20000
+              Buffers: shared read=9552
+        ->  Hash Join  (cost=1.26..1.53 rows=1 width=8) (actual time=0.025..0.025 rows=0.97 loops=717147)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4981186 read=3025398
+              ->  Index Only Scan using idx_order_items_product_order on order_items oi  (cost=0.43..0.68 rows=8 width=8) (actual time=0.005..0.006 rows=4.74 loops=716676)
+                    Index Cond: (product_id = r.product_id)
+                    Heap Fetches: 0
+                    Index Searches: 716676
+                    Buffers: shared hit=1642860 read=630862
+              ->  Hash  (cost=0.77..0.77 rows=5 width=8) (actual time=0.019..0.019 rows=4.66 loops=717147)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=3338326 read=2394536
+                    ->  Index Scan using idx_orders_customer_ordered_at on orders o  (cost=0.43..0.77 rows=5 width=8) (actual time=0.008..0.018 rows=4.66 loops=717147)
+                          Index Cond: (customer_id = r.customer_id)
+                          Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          Rows Removed by Filter: 0
+                          Index Searches: 717147
+                          Buffers: shared hit=3338326 read=2394536
+Planning:
+  Buffers: shared hit=496 read=81
+Planning Time: 4.854 ms
+Execution Time: 6147.674 ms
+=== R17 run 3 ===
+Gather  (cost=1001.26..95598.38 rows=1 width=12) (actual time=174.814..5991.045 rows=20000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=4981073 read=3035063
+  ->  Nested Loop Anti Join  (cost=1.26..94598.28 rows=1 width=12) (actual time=179.246..5910.026 rows=6666.67 loops=3)
+        Buffers: shared hit=4981073 read=3035063
+        ->  Parallel Seq Scan on product_reviews r  (cost=0.00..12782.88 rows=298221 width=12) (actual time=0.057..61.748 rows=239049.00 loops=3)
+              Filter: verified_purchase
+              Rows Removed by Filter: 20000
+              Buffers: shared read=9552
+        ->  Hash Join  (cost=1.26..1.53 rows=1 width=8) (actual time=0.024..0.024 rows=0.97 loops=717147)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4981073 read=3025511
+              ->  Index Only Scan using idx_order_items_product_order on order_items oi  (cost=0.43..0.68 rows=8 width=8) (actual time=0.005..0.005 rows=4.74 loops=716676)
+                    Index Cond: (product_id = r.product_id)
+                    Heap Fetches: 0
+                    Index Searches: 716676
+                    Buffers: shared hit=1642890 read=630832
+              ->  Hash  (cost=0.77..0.77 rows=5 width=8) (actual time=0.018..0.018 rows=4.66 loops=717147)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=3338183 read=2394679
+                    ->  Index Scan using idx_orders_customer_ordered_at on orders o  (cost=0.43..0.77 rows=5 width=8) (actual time=0.007..0.017 rows=4.66 loops=717147)
+                          Index Cond: (customer_id = r.customer_id)
+                          Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          Rows Removed by Filter: 0
+                          Index Searches: 717147
+                          Buffers: shared hit=3338183 read=2394679
+Planning:
+  Buffers: shared hit=496 read=81
+Planning Time: 2.387 ms
+Execution Time: 5991.839 ms

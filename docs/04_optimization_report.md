@@ -184,3 +184,4 @@ Adding secondary indexes accelerates reads but imposes write amplification on `I
    * *Reason:* Requires aggregating over all 240,000 order item rows and joining across categories, products, and returns. Because the report aggregates the entire historical dataset, a sequential scan of `order_items` is mathematically optimal for the query planner. Further speedup requires pre-aggregated materialized views or summary tables refreshed nightly.
 2. **R17: Trust & Safety Verified Review Audit (310.4 ms):**
    * *Reason:* Must evaluate 38,662 reviews and check whether each reviewer has a matching delivered purchase. The anti-semi-join must probe multiple indexes per verified reviewer. Further acceleration at 20× scale requires maintaining a transactional flag or asynchronous fraud review queue.
+

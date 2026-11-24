@@ -1,0 +1,132 @@
+=== R02 run 1 ===
+Limit  (cost=23807.67..24330.22 rows=48 width=35) (actual time=72.575..77.308 rows=48.00 loops=1)
+  Buffers: shared hit=2878 read=6759, temp read=1011 written=1218
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.081..0.126 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=2 read=1
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.075..0.078 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared read=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.013..0.016 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.002..0.003 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.005..0.005 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.001..0.001 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=23781.01..1084863.52 rows=97467 width=35) (actual time=72.574..77.302 rows=48.00 loops=1)
+        Join Filter: (tree.category_id = p.category_id)
+        Rows Removed by Join Filter: 6544
+        Buffers: shared hit=2878 read=6759, temp read=1011 written=1218
+        ->  Gather Merge  (cost=23781.01..46484.28 rows=194934 width=39) (actual time=72.421..76.206 rows=1328.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=2876 read=6758, temp read=1011 written=1218
+              ->  Sort  (cost=22780.98..22984.04 rows=81222 width=39) (actual time=69.890..70.012 rows=971.00 loops=3)
+                    Sort Key: p.price
+                    Sort Method: external merge  Disk: 3328kB
+                    Buffers: shared hit=2876 read=6758, temp read=1011 written=1218
+                    Worker 0:  Sort Method: external merge  Disk: 3208kB
+                    Worker 1:  Sort Method: external merge  Disk: 3184kB
+                    ->  Parallel Seq Scan on products p  (cost=0.00..13935.00 rows=81222 width=39) (actual time=0.059..38.366 rows=64997.00 loops=3)
+                          Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
+                          Rows Removed by Filter: 135003
+                          Buffers: shared hit=2802 read=6758
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.96 loops=1328)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=2 read=1
+Planning:
+  Buffers: shared hit=407 read=3
+Planning Time: 2.061 ms
+Execution Time: 79.192 ms
+=== R02 run 2 ===
+Limit  (cost=23807.67..24330.22 rows=48 width=35) (actual time=70.784..75.694 rows=48.00 loops=1)
+  Buffers: shared hit=3161 read=6476, temp read=1011 written=1218
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.019..0.058 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.015..0.017 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.013..0.016 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.001..0.002 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.004..0.005 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.001..0.001 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=23781.01..1084863.52 rows=97467 width=35) (actual time=70.783..75.689 rows=48.00 loops=1)
+        Join Filter: (tree.category_id = p.category_id)
+        Rows Removed by Join Filter: 6444
+        Buffers: shared hit=3161 read=6476, temp read=1011 written=1218
+        ->  Gather Merge  (cost=23781.01..46484.28 rows=194934 width=39) (actual time=70.681..74.873 rows=1308.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=3158 read=6476, temp read=1011 written=1218
+              ->  Sort  (cost=22780.98..22984.04 rows=81222 width=39) (actual time=67.363..67.470 rows=969.00 loops=3)
+                    Sort Key: p.price
+                    Sort Method: external merge  Disk: 3496kB
+                    Buffers: shared hit=3158 read=6476, temp read=1011 written=1218
+                    Worker 0:  Sort Method: external merge  Disk: 3096kB
+                    Worker 1:  Sort Method: external merge  Disk: 3128kB
+                    ->  Parallel Seq Scan on products p  (cost=0.00..13935.00 rows=81222 width=39) (actual time=0.059..38.831 rows=64997.00 loops=3)
+                          Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
+                          Rows Removed by Filter: 135003
+                          Buffers: shared hit=3084 read=6476
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.96 loops=1308)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=410
+Planning Time: 1.028 ms
+Execution Time: 76.773 ms
+=== R02 run 3 ===
+Limit  (cost=23807.67..24330.22 rows=48 width=35) (actual time=68.330..72.617 rows=48.00 loops=1)
+  Buffers: shared hit=3443 read=6194, temp read=1012 written=1219
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.020..0.060 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.016..0.019 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.014..0.016 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.001..0.003 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.005..0.005 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.001..0.001 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=23781.01..1084863.52 rows=97467 width=35) (actual time=68.329..72.612 rows=48.00 loops=1)
+        Join Filter: (tree.category_id = p.category_id)
+        Rows Removed by Join Filter: 6469
+        Buffers: shared hit=3443 read=6194, temp read=1012 written=1219
+        ->  Gather Merge  (cost=23781.01..46484.28 rows=194934 width=39) (actual time=68.224..71.784 rows=1313.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=3440 read=6194, temp read=1012 written=1219
+              ->  Sort  (cost=22780.98..22984.04 rows=81222 width=39) (actual time=65.606..65.706 rows=958.33 loops=3)
+                    Sort Key: p.price
+                    Sort Method: external merge  Disk: 3376kB
+                    Buffers: shared hit=3440 read=6194, temp read=1012 written=1219
+                    Worker 0:  Sort Method: external merge  Disk: 3184kB
+                    Worker 1:  Sort Method: external merge  Disk: 3168kB
+                    ->  Parallel Seq Scan on products p  (cost=0.00..13935.00 rows=81222 width=39) (actual time=0.070..38.258 rows=64997.00 loops=3)
+                          Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
+                          Rows Removed by Filter: 135003
+                          Buffers: shared hit=3366 read=6194
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.96 loops=1313)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=410
+Planning Time: 1.292 ms
+Execution Time: 73.888 ms

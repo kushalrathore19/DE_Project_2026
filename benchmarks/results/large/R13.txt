@@ -1,0 +1,45 @@
+=== R13 run 1 ===
+Merge Anti Join  (cost=0.85..109164.29 rows=417886 width=13) (actual time=0.415..409.020 rows=313385.00 loops=1)
+  Merge Cond: (a.address_id = o.address_id)
+  Buffers: shared hit=4 read=14860 written=38
+  ->  Index Scan using addresses_pkey on addresses a  (cost=0.42..32167.42 rows=900000 width=13) (actual time=0.011..120.517 rows=900000.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=3 read=11196 written=29
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.43..48846.83 rows=2400000 width=4) (actual time=0.399..129.808 rows=2279784.00 loops=1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=1 read=3664 written=9
+Planning:
+  Buffers: shared hit=333 read=7
+Planning Time: 1.787 ms
+Execution Time: 419.898 ms
+=== R13 run 2 ===
+Merge Anti Join  (cost=0.85..109164.29 rows=417886 width=13) (actual time=0.076..417.450 rows=313385.00 loops=1)
+  Merge Cond: (a.address_id = o.address_id)
+  Buffers: shared hit=5894 read=8970
+  ->  Index Scan using addresses_pkey on addresses a  (cost=0.42..32167.42 rows=900000 width=13) (actual time=0.015..125.952 rows=900000.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=4442 read=6757
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.43..48846.83 rows=2400000 width=4) (actual time=0.057..129.193 rows=2279784.00 loops=1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=1452 read=2213
+Planning:
+  Buffers: shared hit=334 read=6
+Planning Time: 1.113 ms
+Execution Time: 428.243 ms
+=== R13 run 3 ===
+Merge Anti Join  (cost=0.85..109164.29 rows=417886 width=13) (actual time=0.050..369.432 rows=313385.00 loops=1)
+  Merge Cond: (a.address_id = o.address_id)
+  Buffers: shared hit=14864
+  ->  Index Scan using addresses_pkey on addresses a  (cost=0.42..32167.42 rows=900000 width=13) (actual time=0.007..93.410 rows=900000.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=11199
+  ->  Index Only Scan using idx_orders_address_id_not_null on orders o  (cost=0.43..48846.83 rows=2400000 width=4) (actual time=0.040..117.950 rows=2279784.00 loops=1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=3665
+Planning:
+  Buffers: shared hit=340
+Planning Time: 0.897 ms
+Execution Time: 380.172 ms

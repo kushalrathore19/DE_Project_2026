@@ -1,0 +1,27 @@
+=== R07 run 1 ===
+Index Scan using idx_products_seller_stock on products  (cost=0.42..11.99 rows=3 width=41) (actual time=0.524..0.527 rows=5.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Index Searches: 1
+  Buffers: shared read=4
+Planning:
+  Buffers: shared hit=250
+Planning Time: 0.692 ms
+Execution Time: 0.542 ms
+=== R07 run 2 ===
+Index Scan using idx_products_seller_stock on products  (cost=0.42..11.99 rows=3 width=41) (actual time=0.013..0.014 rows=5.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=250
+Planning Time: 0.711 ms
+Execution Time: 0.029 ms
+=== R07 run 3 ===
+Index Scan using idx_products_seller_stock on products  (cost=0.42..11.99 rows=3 width=41) (actual time=0.017..0.019 rows=5.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=250
+Planning Time: 0.722 ms
+Execution Time: 0.036 ms

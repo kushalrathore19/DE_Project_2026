@@ -91,3 +91,4 @@ SELECT count(*) AS june_orders, round(avg(total_amount), 2) AS avg_gmv
 FROM orders_partitioned
 WHERE ordered_at >= '2026-06-01 00:00:00+05:30' AND ordered_at < '2026-07-01 00:00:00+05:30'
   AND status <> 'CANCELLED';
+

@@ -1,0 +1,27 @@
+=== R24 run 1 ===
+Index Scan using products_asin_key on products  (cost=0.42..8.44 rows=1 width=38) (actual time=0.592..0.592 rows=1.00 loops=1)
+  Index Cond: ((asin)::text = 'B0020A200F'::text)
+  Index Searches: 1
+  Buffers: shared read=4
+Planning:
+  Buffers: shared hit=192
+Planning Time: 0.607 ms
+Execution Time: 0.606 ms
+=== R24 run 2 ===
+Index Scan using products_asin_key on products  (cost=0.42..8.44 rows=1 width=38) (actual time=0.032..0.032 rows=1.00 loops=1)
+  Index Cond: ((asin)::text = 'B0020A200F'::text)
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=192
+Planning Time: 0.542 ms
+Execution Time: 0.044 ms
+=== R24 run 3 ===
+Index Scan using products_asin_key on products  (cost=0.42..8.44 rows=1 width=38) (actual time=0.031..0.032 rows=1.00 loops=1)
+  Index Cond: ((asin)::text = 'B0020A200F'::text)
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=192
+Planning Time: 0.541 ms
+Execution Time: 0.043 ms

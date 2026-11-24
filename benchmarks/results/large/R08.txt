@@ -1,0 +1,165 @@
+=== R08 run 1 ===
+Incremental Sort  (cost=92790.88..163667.79 rows=248749 width=24) (actual time=318.982..421.546 rows=25777.00 loops=1)
+  Sort Key: p.category_id, (rank() OVER w1)
+  Presorted Key: p.category_id
+  Full-sort Groups: 31  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+  Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 57kB  Peak Memory: 57kB
+  Buffers: shared hit=4448 read=43156 written=1393, temp read=673 written=676
+  ->  WindowAgg  (cost=92450.36..147768.14 rows=248749 width=24) (actual time=315.512..418.411 rows=25777.00 loops=1)
+        Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
+        Run Condition: (rank() OVER w1 <= 5)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=4445 read=43156 written=1393, temp read=673 written=676
+        ->  Incremental Sort  (cost=92450.14..143415.04 rows=248749 width=16) (actual time=315.502..402.636 rows=221510.00 loops=1)
+              Sort Key: p.category_id, (sum(oi.quantity)) DESC
+              Presorted Key: p.category_id
+              Full-sort Groups: 32  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+              Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 414kB  Peak Memory: 415kB
+              Buffers: shared hit=4445 read=43156 written=1393, temp read=673 written=676
+              ->  GroupAggregate  (cost=90906.43..124230.46 rows=248749 width=16) (actual time=312.833..376.346 rows=221510.00 loops=1)
+                    Group Key: p.category_id, oi.product_id
+                    Buffers: shared hit=4445 read=43156 written=1393, temp read=673 written=676
+                    ->  Gather Merge  (cost=90906.43..119877.35 rows=248749 width=12) (actual time=312.815..343.147 rows=248966.00 loops=1)
+                          Workers Planned: 2
+                          Workers Launched: 2
+                          Buffers: shared hit=4445 read=43156 written=1393, temp read=673 written=676
+                          ->  Sort  (cost=89906.41..90165.52 rows=103645 width=12) (actual time=310.495..315.726 rows=82988.67 loops=3)
+                                Sort Key: p.category_id, oi.product_id
+                                Sort Method: external merge  Disk: 1776kB
+                                Buffers: shared hit=4445 read=43156 written=1393, temp read=673 written=676
+                                Worker 0:  Sort Method: external merge  Disk: 1800kB
+                                Worker 1:  Sort Method: external merge  Disk: 1808kB
+                                ->  Parallel Hash Join  (cost=67842.76..81272.11 rows=103645 width=12) (actual time=224.543..279.129 rows=82988.67 loops=3)
+                                      Hash Cond: (p.product_id = oi.product_id)
+                                      Buffers: shared hit=4431 read=43156 written=1393
+                                      ->  Parallel Seq Scan on products p  (cost=0.00..12060.00 rows=250000 width=8) (actual time=0.088..15.448 rows=200000.00 loops=3)
+                                            Buffers: shared hit=3649 read=5911 written=182
+                                      ->  Parallel Hash  (cost=66547.20..66547.20 rows=103645 width=8) (actual time=224.317..224.319 rows=82988.67 loops=3)
+                                            Buckets: 262144  Batches: 1  Memory Usage: 11808kB
+                                            Buffers: shared hit=782 read=37245 written=1211
+                                            ->  Parallel Hash Join  (cost=5987.80..66547.20 rows=103645 width=8) (actual time=199.581..216.056 rows=82988.67 loops=3)
+                                                  Hash Cond: (oi.order_id = o.order_id)
+                                                  Buffers: shared hit=782 read=37245 written=1211
+                                                  ->  Parallel Seq Scan on order_items oi  (cost=0.00..55313.26 rows=1998526 width=12) (actual time=0.317..72.581 rows=1600000.00 loops=3)
+                                                        Buffers: shared read=35328 written=282
+                                                  ->  Parallel Hash  (cost=5339.53..5339.53 rows=51861 width=4) (actual time=24.145..24.145 rows=41491.33 loops=3)
+                                                        Buckets: 131072  Batches: 1  Memory Usage: 5952kB
+                                                        Buffers: shared hit=782 read=1917 written=929
+                                                        ->  Parallel Index Scan using idx_orders_ordered_at_active on orders o  (cost=0.43..5339.53 rows=51861 width=4) (actual time=0.163..19.947 rows=41491.33 loops=3)
+                                                              Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                                              Index Searches: 1
+                                                              Buffers: shared hit=782 read=1917 written=929
+Planning:
+  Buffers: shared hit=529 read=11
+Planning Time: 3.102 ms
+Execution Time: 424.032 ms
+=== R08 run 2 ===
+Incremental Sort  (cost=92790.88..163667.79 rows=248749 width=24) (actual time=344.704..447.882 rows=25777.00 loops=1)
+  Sort Key: p.category_id, (rank() OVER w1)
+  Presorted Key: p.category_id
+  Full-sort Groups: 31  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+  Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 57kB  Peak Memory: 57kB
+  Buffers: shared hit=6902 read=40675 written=364, temp read=673 written=676
+  ->  WindowAgg  (cost=92450.36..147768.14 rows=248749 width=24) (actual time=341.361..444.823 rows=25777.00 loops=1)
+        Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
+        Run Condition: (rank() OVER w1 <= 5)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=6899 read=40675 written=364, temp read=673 written=676
+        ->  Incremental Sort  (cost=92450.14..143415.04 rows=248749 width=16) (actual time=341.350..428.408 rows=221510.00 loops=1)
+              Sort Key: p.category_id, (sum(oi.quantity)) DESC
+              Presorted Key: p.category_id
+              Full-sort Groups: 32  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+              Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 414kB  Peak Memory: 415kB
+              Buffers: shared hit=6899 read=40675 written=364, temp read=673 written=676
+              ->  GroupAggregate  (cost=90906.43..124230.46 rows=248749 width=16) (actual time=338.834..402.703 rows=221510.00 loops=1)
+                    Group Key: p.category_id, oi.product_id
+                    Buffers: shared hit=6899 read=40675 written=364, temp read=673 written=676
+                    ->  Gather Merge  (cost=90906.43..119877.35 rows=248749 width=12) (actual time=338.820..370.450 rows=248966.00 loops=1)
+                          Workers Planned: 2
+                          Workers Launched: 2
+                          Buffers: shared hit=6899 read=40675 written=364, temp read=673 written=676
+                          ->  Sort  (cost=89906.41..90165.52 rows=103645 width=12) (actual time=336.383..341.701 rows=82988.67 loops=3)
+                                Sort Key: p.category_id, oi.product_id
+                                Sort Method: external merge  Disk: 1800kB
+                                Buffers: shared hit=6899 read=40675 written=364, temp read=673 written=676
+                                Worker 0:  Sort Method: external merge  Disk: 1792kB
+                                Worker 1:  Sort Method: external merge  Disk: 1792kB
+                                ->  Parallel Hash Join  (cost=67842.76..81272.11 rows=103645 width=12) (actual time=250.470..304.546 rows=82988.67 loops=3)
+                                      Hash Cond: (p.product_id = oi.product_id)
+                                      Buffers: shared hit=6885 read=40675 written=364
+                                      ->  Parallel Seq Scan on products p  (cost=0.00..12060.00 rows=250000 width=8) (actual time=0.066..14.623 rows=200000.00 loops=3)
+                                            Buffers: shared hit=3931 read=5629 written=182
+                                      ->  Parallel Hash  (cost=66547.20..66547.20 rows=103645 width=8) (actual time=250.274..250.309 rows=82988.67 loops=3)
+                                            Buckets: 262144  Batches: 1  Memory Usage: 11808kB
+                                            Buffers: shared hit=2954 read=35046 written=182
+                                            ->  Parallel Hash Join  (cost=5987.80..66547.20 rows=103645 width=8) (actual time=225.751..242.222 rows=82988.67 loops=3)
+                                                  Hash Cond: (oi.order_id = o.order_id)
+                                                  Buffers: shared hit=2954 read=35046 written=182
+                                                  ->  Parallel Seq Scan on order_items oi  (cost=0.00..55313.26 rows=1998526 width=12) (actual time=0.093..85.219 rows=1600000.00 loops=3)
+                                                        Buffers: shared hit=282 read=35046 written=182
+                                                  ->  Parallel Hash  (cost=5339.53..5339.53 rows=51861 width=4) (actual time=9.880..9.880 rows=41491.33 loops=3)
+                                                        Buckets: 131072  Batches: 1  Memory Usage: 5952kB
+                                                        Buffers: shared hit=2672
+                                                        ->  Parallel Index Scan using idx_orders_ordered_at_active on orders o  (cost=0.43..5339.53 rows=51861 width=4) (actual time=0.013..5.831 rows=41491.33 loops=3)
+                                                              Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                                              Index Searches: 1
+                                                              Buffers: shared hit=2672
+Planning:
+  Buffers: shared hit=540
+Planning Time: 1.586 ms
+Execution Time: 449.296 ms
+=== R08 run 3 ===
+Incremental Sort  (cost=92790.88..163667.79 rows=248749 width=24) (actual time=352.521..483.544 rows=25777.00 loops=1)
+  Sort Key: p.category_id, (rank() OVER w1)
+  Presorted Key: p.category_id
+  Full-sort Groups: 31  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+  Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 57kB  Peak Memory: 57kB
+  Buffers: shared hit=7467 read=40111 written=315, temp read=673 written=676
+  ->  WindowAgg  (cost=92450.36..147768.14 rows=248749 width=24) (actual time=348.462..479.963 rows=25777.00 loops=1)
+        Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
+        Run Condition: (rank() OVER w1 <= 5)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=7464 read=40111 written=315, temp read=673 written=676
+        ->  Incremental Sort  (cost=92450.14..143415.04 rows=248749 width=16) (actual time=348.448..460.771 rows=221510.00 loops=1)
+              Sort Key: p.category_id, (sum(oi.quantity)) DESC
+              Presorted Key: p.category_id
+              Full-sort Groups: 32  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+              Pre-sorted Groups: 32  Sort Method: quicksort  Average Memory: 414kB  Peak Memory: 415kB
+              Buffers: shared hit=7464 read=40111 written=315, temp read=673 written=676
+              ->  GroupAggregate  (cost=90906.43..124230.46 rows=248749 width=16) (actual time=345.854..423.663 rows=221510.00 loops=1)
+                    Group Key: p.category_id, oi.product_id
+                    Buffers: shared hit=7464 read=40111 written=315, temp read=673 written=676
+                    ->  Gather Merge  (cost=90906.43..119877.35 rows=248749 width=12) (actual time=345.837..383.147 rows=248966.00 loops=1)
+                          Workers Planned: 2
+                          Workers Launched: 2
+                          Buffers: shared hit=7464 read=40111 written=315, temp read=673 written=676
+                          ->  Sort  (cost=89906.41..90165.52 rows=103645 width=12) (actual time=342.800..349.510 rows=82988.67 loops=3)
+                                Sort Key: p.category_id, oi.product_id
+                                Sort Method: external merge  Disk: 1888kB
+                                Buffers: shared hit=7464 read=40111 written=315, temp read=673 written=676
+                                Worker 0:  Sort Method: external merge  Disk: 1744kB
+                                Worker 1:  Sort Method: external merge  Disk: 1752kB
+                                ->  Parallel Hash Join  (cost=67842.76..81272.11 rows=103645 width=12) (actual time=236.091..308.342 rows=82988.67 loops=3)
+                                      Hash Cond: (p.product_id = oi.product_id)
+                                      Buffers: shared hit=7450 read=40111 written=315
+                                      ->  Parallel Seq Scan on products p  (cost=0.00..12060.00 rows=250000 width=8) (actual time=0.095..16.358 rows=200000.00 loops=3)
+                                            Buffers: shared hit=4213 read=5347 written=133
+                                      ->  Parallel Hash  (cost=66547.20..66547.20 rows=103645 width=8) (actual time=235.860..235.936 rows=82988.67 loops=3)
+                                            Buckets: 262144  Batches: 1  Memory Usage: 11840kB
+                                            Buffers: shared hit=3237 read=34764 written=182
+                                            ->  Parallel Hash Join  (cost=5987.80..66547.20 rows=103645 width=8) (actual time=206.803..225.677 rows=82988.67 loops=3)
+                                                  Hash Cond: (oi.order_id = o.order_id)
+                                                  Buffers: shared hit=3237 read=34764 written=182
+                                                  ->  Parallel Seq Scan on order_items oi  (cost=0.00..55313.26 rows=1998526 width=12) (actual time=0.086..74.535 rows=1600000.00 loops=3)
+                                                        Buffers: shared hit=564 read=34764 written=182
+                                                  ->  Parallel Hash  (cost=5339.53..5339.53 rows=51861 width=4) (actual time=8.662..8.662 rows=41491.33 loops=3)
+                                                        Buckets: 131072  Batches: 1  Memory Usage: 5952kB
+                                                        Buffers: shared hit=2673
+                                                        ->  Parallel Index Scan using idx_orders_ordered_at_active on orders o  (cost=0.43..5339.53 rows=51861 width=4) (actual time=0.012..5.233 rows=41491.33 loops=3)
+                                                              Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                                              Index Searches: 1
+                                                              Buffers: shared hit=2673
+Planning:
+  Buffers: shared hit=540
+Planning Time: 1.591 ms
+Execution Time: 485.029 ms

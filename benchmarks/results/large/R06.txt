@@ -1,0 +1,66 @@
+=== R06 run 1 ===
+Sort  (cost=1359.78..1359.80 rows=9 width=25) (actual time=31.663..31.664 rows=11.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=346 read=319
+  ->  Nested Loop  (cost=0.86..1359.63 rows=9 width=25) (actual time=29.123..31.643 rows=11.00 loops=1)
+        Buffers: shared hit=343 read=319
+        ->  Index Only Scan using idx_order_items_seller_order on order_items oi  (cost=0.43..11.23 rows=160 width=17) (actual time=0.403..0.525 rows=164.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=2 read=4
+        ->  Index Scan using orders_pkey on orders o  (cost=0.43..8.43 rows=1 width=12) (actual time=0.189..0.189 rows=0.07 loops=164)
+              Index Cond: (order_id = oi.order_id)
+              Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Rows Removed by Filter: 1
+              Index Searches: 164
+              Buffers: shared hit=341 read=315
+Planning:
+  Buffers: shared hit=405 read=3
+Planning Time: 1.590 ms
+Execution Time: 31.739 ms
+=== R06 run 2 ===
+Sort  (cost=1359.78..1359.80 rows=9 width=25) (actual time=0.767..0.768 rows=11.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=665
+  ->  Nested Loop  (cost=0.86..1359.63 rows=9 width=25) (actual time=0.712..0.754 rows=11.00 loops=1)
+        Buffers: shared hit=662
+        ->  Index Only Scan using idx_order_items_seller_order on order_items oi  (cost=0.43..11.23 rows=160 width=17) (actual time=0.007..0.021 rows=164.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.43..8.43 rows=1 width=12) (actual time=0.004..0.004 rows=0.07 loops=164)
+              Index Cond: (order_id = oi.order_id)
+              Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Rows Removed by Filter: 1
+              Index Searches: 164
+              Buffers: shared hit=656
+Planning:
+  Buffers: shared hit=408
+Planning Time: 1.048 ms
+Execution Time: 0.814 ms
+=== R06 run 3 ===
+Sort  (cost=1359.78..1359.80 rows=9 width=25) (actual time=0.800..0.801 rows=11.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=665
+  ->  Nested Loop  (cost=0.86..1359.63 rows=9 width=25) (actual time=0.722..0.785 rows=11.00 loops=1)
+        Buffers: shared hit=662
+        ->  Index Only Scan using idx_order_items_seller_order on order_items oi  (cost=0.43..11.23 rows=160 width=17) (actual time=0.006..0.021 rows=164.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.43..8.43 rows=1 width=12) (actual time=0.005..0.005 rows=0.07 loops=164)
+              Index Cond: (order_id = oi.order_id)
+              Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Rows Removed by Filter: 1
+              Index Searches: 164
+              Buffers: shared hit=656
+Planning:
+  Buffers: shared hit=408
+Planning Time: 1.106 ms
+Execution Time: 0.850 ms

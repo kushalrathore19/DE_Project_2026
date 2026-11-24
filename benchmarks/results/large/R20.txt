@@ -1,0 +1,63 @@
+=== R20 run 1 ===
+WindowAgg  (cost=17930.13..22597.57 rows=124466 width=68) (actual time=31.318..47.683 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((orders.ordered_at)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=4 read=616, temp read=299 written=300
+  ->  GroupAggregate  (cost=17930.09..20730.58 rows=124466 width=36) (actual time=30.710..47.644 rows=30.00 loops=1)
+        Group Key: ((orders.ordered_at)::date)
+        Buffers: shared hit=4 read=616, temp read=299 written=300
+        ->  Sort  (cost=17930.09..18241.26 rows=124466 width=9) (actual time=30.080..37.148 rows=124474.00 loops=1)
+              Sort Key: ((orders.ordered_at)::date)
+              Sort Method: external merge  Disk: 2392kB
+              Buffers: shared hit=4 read=616, temp read=299 written=300
+              ->  Index Only Scan using idx_orders_ordered_at_active on orders  (cost=0.43..5268.91 rows=124466 width=9) (actual time=0.029..17.931 rows=124474.00 loops=1)
+                    Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=1 read=616
+Planning:
+  Buffers: shared hit=237 read=50
+Planning Time: 1.198 ms
+Execution Time: 48.620 ms
+=== R20 run 2 ===
+WindowAgg  (cost=17930.13..22597.57 rows=124466 width=68) (actual time=30.940..46.988 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((orders.ordered_at)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=620, temp read=299 written=300
+  ->  GroupAggregate  (cost=17930.09..20730.58 rows=124466 width=36) (actual time=30.347..46.948 rows=30.00 loops=1)
+        Group Key: ((orders.ordered_at)::date)
+        Buffers: shared hit=620, temp read=299 written=300
+        ->  Sort  (cost=17930.09..18241.26 rows=124466 width=9) (actual time=29.726..36.779 rows=124474.00 loops=1)
+              Sort Key: ((orders.ordered_at)::date)
+              Sort Method: external merge  Disk: 2392kB
+              Buffers: shared hit=620, temp read=299 written=300
+              ->  Index Only Scan using idx_orders_ordered_at_active on orders  (cost=0.43..5268.91 rows=124466 width=9) (actual time=0.022..17.061 rows=124474.00 loops=1)
+                    Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=617
+Planning:
+  Buffers: shared hit=287
+Planning Time: 1.015 ms
+Execution Time: 48.182 ms
+=== R20 run 3 ===
+WindowAgg  (cost=17930.13..22597.57 rows=124466 width=68) (actual time=32.043..49.401 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((orders.ordered_at)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=620, temp read=299 written=300
+  ->  GroupAggregate  (cost=17930.09..20730.58 rows=124466 width=36) (actual time=31.405..49.357 rows=30.00 loops=1)
+        Group Key: ((orders.ordered_at)::date)
+        Buffers: shared hit=620, temp read=299 written=300
+        ->  Sort  (cost=17930.09..18241.26 rows=124466 width=9) (actual time=30.766..37.858 rows=124474.00 loops=1)
+              Sort Key: ((orders.ordered_at)::date)
+              Sort Method: external merge  Disk: 2392kB
+              Buffers: shared hit=620, temp read=299 written=300
+              ->  Index Only Scan using idx_orders_ordered_at_active on orders  (cost=0.43..5268.91 rows=124466 width=9) (actual time=0.019..17.767 rows=124474.00 loops=1)
+                    Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=617
+Planning:
+  Buffers: shared hit=287
+Planning Time: 0.836 ms
+Execution Time: 50.403 ms

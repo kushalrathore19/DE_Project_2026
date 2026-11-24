@@ -1,0 +1,57 @@
+=== W03 run 1 ===
+Update on products p  (cost=0.00..17061.76 rows=0 width=0) (actual time=45.932..45.933 rows=0.00 loops=1)
+  Buffers: shared hit=317 read=9308 dirtied=2
+  ->  Nested Loop  (cost=0.00..17061.76 rows=1 width=28) (actual time=0.654..44.646 rows=1.00 loops=1)
+        Join Filter: (c.category_id = p.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=255 read=9306
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.007..0.010 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Seq Scan on products p  (cost=0.00..17060.00 rows=20 width=15) (actual time=0.641..44.629 rows=20.00 loops=1)
+              Filter: (seller_id = 217)
+              Rows Removed by Filter: 599980
+              Buffers: shared hit=254 read=9306
+Planning:
+  Buffers: shared hit=336 read=7
+Planning Time: 0.986 ms
+Execution Time: 46.006 ms
+=== W03 run 2 ===
+Update on products p  (cost=0.00..17061.76 rows=0 width=0) (actual time=45.037..45.038 rows=0.00 loops=1)
+  Buffers: shared hit=415 read=9212 dirtied=1
+  ->  Nested Loop  (cost=0.00..17061.76 rows=1 width=28) (actual time=0.655..43.972 rows=1.00 loops=1)
+        Join Filter: (c.category_id = p.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=349 read=9212
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.008..0.010 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Seq Scan on products p  (cost=0.00..17060.00 rows=20 width=15) (actual time=0.641..43.953 rows=20.00 loops=1)
+              Filter: (seller_id = 217)
+              Rows Removed by Filter: 599980
+              Buffers: shared hit=348 read=9212
+Planning:
+  Buffers: shared hit=343
+Planning Time: 0.929 ms
+Execution Time: 45.112 ms
+=== W03 run 3 ===
+Update on products p  (cost=0.00..17061.76 rows=0 width=0) (actual time=45.772..45.773 rows=0.00 loops=1)
+  Buffers: shared hit=509 read=9118 dirtied=1
+  ->  Nested Loop  (cost=0.00..17061.76 rows=1 width=28) (actual time=0.692..44.608 rows=1.00 loops=1)
+        Join Filter: (c.category_id = p.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=443 read=9118
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.013..0.016 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Seq Scan on products p  (cost=0.00..17060.00 rows=20 width=15) (actual time=0.673..44.584 rows=20.00 loops=1)
+              Filter: (seller_id = 217)
+              Rows Removed by Filter: 599980
+              Buffers: shared hit=442 read=9118
+Planning:
+  Buffers: shared hit=343
+Planning Time: 1.239 ms
+Execution Time: 45.892 ms

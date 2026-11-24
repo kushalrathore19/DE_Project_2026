@@ -1,0 +1,30 @@
+=== R22 run 1 ===
+Limit  (cost=3795.40..3796.66 rows=25 width=30) (actual time=14.008..14.012 rows=25.00 loops=1)
+  Buffers: shared hit=1316
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.43..121439.43 rows=2400000 width=30) (actual time=0.013..11.454 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1316
+Planning:
+  Buffers: shared hit=218
+Planning Time: 0.642 ms
+Execution Time: 14.035 ms
+=== R22 run 2 ===
+Limit  (cost=3795.40..3796.66 rows=25 width=30) (actual time=14.252..14.256 rows=25.00 loops=1)
+  Buffers: shared hit=1316
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.43..121439.43 rows=2400000 width=30) (actual time=0.013..11.741 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1316
+Planning:
+  Buffers: shared hit=218
+Planning Time: 0.585 ms
+Execution Time: 14.279 ms
+=== R22 run 3 ===
+Limit  (cost=3795.40..3796.66 rows=25 width=30) (actual time=14.819..14.824 rows=25.00 loops=1)
+  Buffers: shared hit=1316
+  ->  Index Scan using idx_orders_ordered_at_desc on orders  (cost=0.43..121439.43 rows=2400000 width=30) (actual time=0.018..12.379 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1316
+Planning:
+  Buffers: shared hit=218
+Planning Time: 0.717 ms
+Execution Time: 14.848 ms
